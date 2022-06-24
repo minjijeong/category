@@ -1,0 +1,42 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  # DB 연결
+  datasource:
+    # 설치된 H2 DB와 연결 URL
+    url: jdbc:h2:mem:test
+    # 접속을 위한 드라이버
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 1234 # password 처리는 나중에..
+  jpa:
+    # JPA가 수행하는 SQL을 볼 수 있다.
+    show-sql: true
+    # 인메모리 db 사용으로 빌드시 create, 종료 시 drop
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true # 로그에 표시되는 SQL문을 표시한다.(true or false)
+        use_sql_comments: true # SQL문에 주석을 표시한다.(true or false)
+    database-platform: org.hibernate.dialect.H2Dialect
+    # JPA가 특정 데이터베이스에 종속되지 않기때문에 H2Dialect용으로 바꾸도록 해주는 옵션
+    # dialect(방언) - 페이징과 같이 특정 DB만의 가진 문법
+
+  # 콘솔 확인 을 위한 always
+  output:
+    ansi:
+      enabled: always
+#  sql:
+#    init:
+#      schema-locations: classpath*:db/schema.sql
+#      data-locations: classpath*:db/data.sql
+
+# 파라미터 확인을 위한 trace
+logging:
+  level:
+    org.hibernate.type: trace
+    org.springframework.web : debug
+    org.springframework: info
