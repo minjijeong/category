@@ -1,14 +1,12 @@
 package com.api.category.repository;
 
-import com.api.category.entity.Category;
+import com.api.category.model.entity.Category;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,89 +25,109 @@ public class CategoryRepositoryTests {
     void 카테고리기본생성() throws Exception{
         List<Category> categoryList = new ArrayList<>();
         Category cate = Category.builder()
+                .id(5L)
                 .cateName("소_소분류카테")
-                .cateId("0000005")
                 .level(3)
-                .largeCateId("0000002")
-                .mediumCateId("0000003")
+                .largeCateId(1L)
+                .mediumCateId(2L)
+                .dispYn(true)
                 .build();
         categoryList.add(cate);
         cate = Category.builder()
                 .cateName("대_대분류카테")
-                .cateId("0000002")
+                .id(6L)
                 .level(1)
+                .dispYn(true)
                 .build();
         categoryList.add(cate);
         cate = Category.builder()
                 .cateName("중_중분류카테")
-                .cateId("0000003")
+                .id(7L)
                 .level(2)
-                .largeCateId("0000002")
+                .largeCateId(1L)
+                .dispYn(true)
                 .build();
         categoryList.add(cate);
         cate = Category.builder()
                 .cateName("소_소분류카테2")
-                .cateId("0000004")
-                .largeCateId("0000002")
-                .mediumCateId("0000003")
+                .id(8L)
+                .largeCateId(1L)
+                .mediumCateId(2L)
                 .level(3)
+                .dispYn(true)
                 .build();
         categoryList.add(cate);
-        List<Category> result = repository.saveAllAndFlush(categoryList);
+        cate = Category.builder()
+                .cateName("대_대분류카테")
+                .id(9L)
+                .level(1)
+                .dispYn(true)
+                .build();
+        categoryList.add(cate);
+        List<Category> result = repository.saveAll(categoryList);
+        clear();
     }
 
     @Test
     void 카테고리생성() throws Exception{
         Category cate = Category.builder()
-                                .cateName("소_소분류카테")
-                                .cateId("0000001")
-                                .level(3)
+                                .id(10L)
+                                .cateName("대분류카테_단일생성")
+                                .level(1)
+                                .dispYn(true)
                                 .build();
         Category result = repository.save(cate);
+        clear();
+
         Assertions.assertThat(cate.equals(result));
     }
 
     @Test
     void 카테고리수정() {
-        String cateId = "0000002";
+        long cateId = 2L;
         Category category = repository.findByCateId(cateId);
         category.setCateName("뉴_카테아이디");
         repository.save(category);
+        clear();
+
         Category result = repository.findByCateId(cateId);
         Assertions.assertThat(result.getCateName()).isEqualTo(category.getCateName());
     }
 
     @Test
     void 카테고리삭제(){
-        String cateId = "0000002";
-        repository.deleteById(cateId);
-        Optional<Category> result = repository.findById(cateId);
-        Assertions.assertThat(result).isEmpty();
+        long cateId = 9;
+        Category result = repository.findByCateId(cateId);
+        repository.deleteById(result.getId());
+        clear();
+
+        result = repository.findByCateId(cateId);
+        Assertions.assertThat(result).isNull();
     }
 
     @Test
     void 카테고리조회_단일조회(){
-        String cateId = "0000002";
-        Optional<Category> category = repository.findById(cateId);
-        Assertions.assertThat(category.get().getCateId()).isEqualTo(cateId);
+        long cateId = 3;
+        Category category = repository.findByCateId(cateId);
+        Assertions.assertThat(category.getId()).isEqualTo(cateId);
     }
 
     @Test
     void 카테고리조회_대분류기준(){
-        String lCateId = "0000002";
-        List<Category> categoryList = repository.findAllByLCate(lCateId);
-        Assertions.assertThat(categoryList.size()).isEqualTo(3);
+        long lCateId = 1L;
+        List<Category> CategoryList = repository.findAllByLCate(lCateId);
+        Assertions.assertThat(CategoryList.size()).isEqualTo(6);
     }
 
     @Test
     void 카테고리조회_중분류기준(){
-        String mCateId = "0000003";
-        List<Category> categoryList = repository.findAllByMCate(mCateId);
-        Assertions.assertThat(categoryList.size()).isEqualTo(2);
+        long mCateId = 2L;
+        List<Category> CategoryList = repository.findAllByMCate(mCateId);
+        Assertions.assertThat(CategoryList.size()).isEqualTo(4);
     }
 
-    @AfterEach
     void clear() {
+//        em.flush();
         em.clear();
     }
 }

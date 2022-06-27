@@ -16,23 +16,24 @@ spring:
     show-sql: true
     # 인메모리 db 사용으로 빌드시 create, 종료 시 drop
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true # 로그에 표시되는 SQL문을 표시한다.(true or false)
         use_sql_comments: true # SQL문에 주석을 표시한다.(true or false)
-    database-platform: org.hibernate.dialect.H2Dialect
+#    database-platform: org.hibernate.dialect.H2Dialect
     # JPA가 특정 데이터베이스에 종속되지 않기때문에 H2Dialect용으로 바꾸도록 해주는 옵션
     # dialect(방언) - 페이징과 같이 특정 DB만의 가진 문법
-
+    defer-datasource-initialization: true
   # 콘솔 확인 을 위한 always
   output:
     ansi:
       enabled: always
-#  sql:
-#    init:
-#      schema-locations: classpath*:db/schema.sql
-#      data-locations: classpath*:db/data.sql
+  sql:
+    init:
+      schema-locations: classpath*:db/schema.sql
+      data-locations: classpath*:db/data.sql
+
 
 # 파라미터 확인을 위한 trace
 logging:

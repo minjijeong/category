@@ -1,7 +1,9 @@
-package com.api.category.entity;
+package com.api.category.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import lombok.Setter;
 public class Category {
     // 현재 카테고리 ID
     @Id
-    private String cateId;
+    private Long id;
 
     // 카테고리 레벨
     @Column(nullable = false)
@@ -24,39 +26,28 @@ public class Category {
     private String cateName;
 
     // 대분류 카테고리 코드
-    private String largeCateId;
+    private Long largeCateId;
 
     // 중분류 카테고리 코드
-    private String mediumCateId;
+    private Long mediumCateId;
 
     // 소분류 카테고리 코드
-    private String smallCateId;
+    private Long smallCateId;
 
     // 카테고리 노출 여부
     private boolean dispYn;
 
     @Builder
-    public Category(String cateId, int level, String cateName, String largeCateId, String mediumCateId,
-                    String smallCateId) {
-        this.cateId = cateId;
+    public Category(Long id, int level, String cateName, Long largeCateId, Long mediumCateId,
+                     long smallCateId, boolean dispYn) {
+        this.id = id;
         this.level = level;
         this.cateName = cateName;
         this.largeCateId = largeCateId;
         this.mediumCateId = mediumCateId;
         this.smallCateId = smallCateId;
+        this.dispYn = dispYn;
     }
 
     public Category() {}
-    @Override
-    public String toString() {
-        return "Category{" +
-                "cateId='" + cateId + '\'' +
-                ", level=" + level +
-                ", cateName='" + cateName + '\'' +
-                ", largeCateId='" + largeCateId + '\'' +
-                ", mediumCateId='" + mediumCateId + '\'' +
-                ", smallCateId='" + smallCateId + '\'' +
-                '}';
-    }
-
 }

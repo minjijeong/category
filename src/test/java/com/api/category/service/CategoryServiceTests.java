@@ -1,6 +1,7 @@
 package com.api.category.service;
 
-import com.api.category.entity.Category;
+import com.api.category.model.dto.CategoryForm;
+import com.api.category.model.entity.Category;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -28,31 +29,37 @@ public class CategoryServiceTests {
         List<Category> categoryList = new ArrayList<>();
         Category cate = Category.builder()
                 .cateName("소_소분류카테")
-                .cateId("0000005")
+                .id(5L)
                 .level(3)
-                .largeCateId("0000002")
-                .mediumCateId("0000003")
+                .largeCateId(1L)
+                .mediumCateId(2L)
                 .build();
         categoryList.add(cate);
         cate = Category.builder()
                 .cateName("대_대분류카테")
-                .cateId("0000002")
+                .id(6L)
                 .level(1)
                 .build();
         categoryList.add(cate);
         cate = Category.builder()
                 .cateName("중_중분류카테")
-                .cateId("0000003")
+                .id(7L)
                 .level(2)
-                .largeCateId("0000002")
+                .largeCateId(1L)
                 .build();
         categoryList.add(cate);
         cate = Category.builder()
                 .cateName("소_소분류카테2")
-                .cateId("0000004")
-                .largeCateId("0000002")
-                .mediumCateId("0000003")
+                .id(8L)
+                .largeCateId(1L)
+                .mediumCateId(2L)
                 .level(3)
+                .build();
+        categoryList.add(cate);
+        cate = Category.builder()
+                .cateName("대_대분류카테")
+                .id(9L)
+                .level(1)
                 .build();
         categoryList.add(cate);
         List<Category> result = service.saveAll(categoryList);
@@ -61,11 +68,10 @@ public class CategoryServiceTests {
     @Transactional
     @Test
     void 카테고리생성() throws Exception{
-        Category cate = Category.builder()
-                .cateName("소_소분류카테")
-                .cateId("0000001")
-                .level(3)
-                .build();
+        CategoryForm cate = CategoryForm.builder()
+                                        .cateName("대_대분류 카테 테스트")
+                                        .level(1)
+                                        .build();
         Category result = service.save(cate);
         Assertions.assertThat(cate.equals(result));
     }
@@ -75,19 +81,19 @@ public class CategoryServiceTests {
     void 카테고리수정() {
         Category category = Category.builder()
                 .cateName("카테고리 바꼈어여~~~ ")
-                .cateId("0000005")
+                .id(10L)
                 .level(3)
-                .largeCateId("0000002")
-                .mediumCateId("0000003")
+                .largeCateId(1L)
+                .mediumCateId(2L)
                 .build();
         Category result = service.update(category);
-        Assertions.assertThat(result.getCateName()).isEqualTo(category.getCateName());
+        Assertions.assertThat(category.getCateName()).isEqualTo(result.getCateName());
     }
 
     @Transactional
     @Test
     void 카테고리삭제(){
-        String cateId = "0000002";
+        long cateId = 9;
         service.delete(cateId);
         Category reseult = service.searchCategoryById(cateId);
         Assertions.assertThat(reseult).isNull();
@@ -95,23 +101,23 @@ public class CategoryServiceTests {
 
     @Test
     void 카테고리조회_단일조회(){
-        String cateId = "0000002";
+        long cateId = 3L;
         Category category = service.searchCategoryById(cateId);
-        Assertions.assertThat(category.getCateId()).isEqualTo(cateId);
+        Assertions.assertThat(category.getId()).isEqualTo(cateId);
     }
 
     @Test
     void 카테고리조회_대분류기준(){
-        String lCateId = "0000002";
-        List<Category> categoryList = service.searchCategoryByLCateId(lCateId);
-        Assertions.assertThat(categoryList.size()).isEqualTo(3);
+        long lCateId = 1;
+        List<Category> TCategoryList = service.searchCategoryListById(lCateId);
+        Assertions.assertThat(TCategoryList.size()).isEqualTo(6);
     }
 
     @Test
     void 카테고리조회_중분류기준(){
-        String mCateId = "0000003";
-        List<Category> categoryList = service.searchCategoryByMCateId(mCateId);
-        Assertions.assertThat(categoryList.size()).isEqualTo(2);
+        long mCateId = 2;
+        List<Category> TCategoryList = service.searchCategoryListById(mCateId);
+        Assertions.assertThat(TCategoryList.size()).isEqualTo(4);
     }
 
     @AfterEach
