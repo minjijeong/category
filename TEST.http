@@ -1,0 +1,48 @@
+### 1. API Connection Test
+GET http://localhost:8080/api/hello
+Accept: application/json
+
+#{
+#  "status": 200,
+#  "errorCode": null,
+#  "message": "OK",
+#  "result": "Hello, World",
+#  "error": false
+#}
+
+### 카테고리 생성
+POST http://localhost:8080/api/category/register
+Content-Type: application/json
+
+{
+  "cateName":"소_소분류카테_POST",
+  "level":3,
+  "largeCateId":1,
+  "mediumCateId":2
+}
+
+### 카테고리 수정
+PUT http://localhost:8080/api/category/1
+Content-Type: application/json
+
+{
+  "id": 2,
+  "level": 2,
+  "cateName": "중분류_카테고리수정됨_HTTP요청",
+  "largeCateId": 1,
+  "mediumCateId": 0,
+  "smallCateId": 0,
+  "dispYn": true
+}
+
+### 카테고리 삭제
+DELETE  http://localhost:8080/api/category/4
+
+### 카테고리 조회
+# 대,중분류 조회 시 하위 카테고리 조회
+# 소분류는 소분류 조회
+
+GET http://localhost:8080/api/category/1
+
+### 카테고리 전체조회
+GET http://localhost:8080/api/category/
