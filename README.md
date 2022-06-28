@@ -1,13 +1,31 @@
-## 개발환경 구성
+## 1. 설치 및 빌드 
+```
+cd categoryapi/build/libs
+java -jar category-0.0.1-SNAPSHOT.jar
+```
+
+***로컬에 Java8만 설치되어 있는경우 하위 파일로 대체**   
+categoryapi/backup-jar/category-0.0.1-SNAPSHOT_java8.jar
+
+## 2. 테스트 및 API 확인
+### 방법1. JUnit Test 실행 후 REST Docs 결과값 확인
+- JUnit repository, service, API UnitTest 생성
+  * REST Docs 저장 경로 : categoryapi/custom
+
+### 방법2. TEST.http 이용하여 API 호출 테스트
+- categoryapi/TEST.http 파일 참고
+
+## 3. 프로젝트 정보
+### 개발환경 구성
 - Gradle 7.4.1
 - Springboot 2.7.0 
-- Java11 
+- Java8 
 - Spring Data JPA
 - H2 Database
 - Spring Web
 - Spring REST Docs 3.3.2
 
-## 요구사항 정리 
+### 요구사항 정리 
 - 카테고리 등록/수정/삭제 API 
   * 카테고리를 등록/수정/삭제 할 수 있어야 합니다.
 - 카테고리 조회 API 
@@ -84,11 +102,3 @@ result를 data 항목으로 return 한다.
     "error": true
 }
 ```
-
-## 테스트 및 문서 정의 
-### 방법1. JUnit Test 실행 후 REST Docs 결과값 확인
-- JUnit repository, service, API UnitTest 생성
-  * REST Docs 저장 경로 : categoryapi/custom
-
-### 방법2. TEST.http 이용하여 API 호출 테스트
-- categoryapi/TEST.http 파일 참고
