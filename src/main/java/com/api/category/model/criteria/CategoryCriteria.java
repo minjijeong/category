@@ -1,17 +1,15 @@
 package com.api.category.model.criteria;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class CategoryCriteria {
     // 카테고리 ID
     private Long id;
 
-    // 카테고리 레벨
-    private int level;
-
-    public CategoryCriteria(Long id, int level) {
+    public CategoryCriteria(Long id) {
         this.id = id;
-        this.level = level;
     }
 }

@@ -1,0 +1,30 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 443
+
+{
+  "status" : 200,
+  "errorCode" : null,
+  "message" : "OK",
+  "result" : [ {
+    "id" : 3,
+    "level" : 3,
+    "cateName" : "소_소분류카테_sql",
+    "largeCateId" : 1,
+    "mediumCateId" : 2,
+    "smallCateId" : 0,
+    "dispYn" : true
+  }, {
+    "id" : 4,
+    "level" : 3,
+    "cateName" : "소_소분류카테2_sql",
+    "largeCateId" : 1,
+    "mediumCateId" : 2,
+    "smallCateId" : 0,
+    "dispYn" : true
+  } ],
+  "error" : false
+}
+----

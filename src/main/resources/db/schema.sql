@@ -4,7 +4,7 @@ create table category (
       cate_name varchar(255) not null,
       disp_yn boolean not null,
       large_cate_id bigint,
-      level integer not null,
+      level int not null,
       medium_cate_id bigint,
       small_cate_id bigint,
       primary key (id)

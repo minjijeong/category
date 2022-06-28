@@ -133,7 +133,6 @@ public class CategoryRepositoryTests {
 
 
     void clear() {
-//        em.flush();
         em.clear();
     }
 }

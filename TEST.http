@@ -15,10 +15,11 @@ POST http://localhost:8080/api/category/register
 Content-Type: application/json
 
 {
-  "cateName":"소_소분류카테_POST",
+  "cateName":"소_소분류카테_POST3",
   "level":3,
   "largeCateId":1,
-  "mediumCateId":2
+  "mediumCateId":2,
+  "dispYn" : true
 }
 
 ### 카테고리 수정
@@ -36,7 +37,7 @@ Content-Type: application/json
 }
 
 ### 카테고리 삭제
-DELETE  http://localhost:8080/api/category/4
+DELETE  http://localhost:8080/api/category/3
 
 ### 카테고리 조회
 # 대,중분류 조회 시 하위 카테고리 조회
@@ -44,5 +45,8 @@ DELETE  http://localhost:8080/api/category/4
 
 GET http://localhost:8080/api/category/1
 
-### 카테고리 전체조회
+### 카테고리 전체조회 (전시여부 : 전시)
 GET http://localhost:8080/api/category/
+
+### 카테고리 전체조회
+GET http://localhost:8080/api/category/all

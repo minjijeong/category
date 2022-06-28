@@ -1,4 +1,4 @@
-package com.api.category.model.dto;
+package com.api.category.model.form;
 
 import com.api.category.repository.CategoryRepository;
 import org.apache.logging.log4j.util.Strings;

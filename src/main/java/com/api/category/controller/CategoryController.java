@@ -2,8 +2,8 @@ package com.api.category.controller;
 
 import com.api.category.model.criteria.CategoryCriteria;
 import com.api.category.model.criteria.CategoryCriteriaValidator;
-import com.api.category.model.dto.CategoryForm;
-import com.api.category.model.dto.CategoryFormValidator;
+import com.api.category.model.form.CategoryForm;
+import com.api.category.model.form.CategoryFormValidator;
 import com.api.category.model.entity.Category;
 import com.api.category.model.response.Json;
 import com.api.category.service.CategoryService;
@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -54,10 +55,7 @@ public class CategoryController {
         categoryFormValidator.validate(categoryForm, bindingResult);
 
         if(bindingResult.hasErrors()) {
-            ObjectError error = bindingResult.getGlobalError();
-            String errorMsg = Arrays.toString(error.getArguments()) + error.getDefaultMessage();
-            int errorCode = Integer.valueOf(error.getCode());
-            return Json.createErrorJson(errorCode,errorMsg );
+            return setErrorMessage(bindingResult);
         }
 
         Category response = service.save(categoryForm);
@@ -72,25 +70,20 @@ public class CategoryController {
         categoryFormValidator.validate(categoryForm, bindingResult);
 
         if(bindingResult.hasErrors()) {
-            ObjectError error = bindingResult.getGlobalError();
-            String errorMsg = Arrays.toString(error.getArguments()) + error.getDefaultMessage();
-            int errorCode = Integer.valueOf(error.getCode());
-            return Json.createErrorJson(errorCode,errorMsg );
+            return setErrorMessage(bindingResult);
         }
 
         Category response = service.update(categoryForm);
         return Json.createJson(response);
     }
     @DeleteMapping("/category/{id}")
-    public Json<?> deleteCategory(@PathVariable("id") long id, BindingResult bindingResult){
+    public Json<?> deleteCategory(@PathVariable("id") long id, @ModelAttribute CategoryCriteria criteria, BindingResult bindingResult){
         // validation
-        categoryCriteriaValidator.validate(new CategoryCriteria(id,0), bindingResult);
+        criteria.setId(id);
+        categoryCriteriaValidator.validate(criteria, bindingResult);
 
         if(bindingResult.hasErrors()) {
-            ObjectError error = bindingResult.getGlobalError();
-            String errorMsg = Arrays.toString(error.getArguments()) + error.getDefaultMessage();
-            int errorCode = Integer.valueOf(error.getCode());
-            return Json.createErrorJson(errorCode,errorMsg );
+            return setErrorMessage(bindingResult);
         }
 
         Category response = service.delete(id);
@@ -111,5 +104,23 @@ public class CategoryController {
     public Json<?> getCategoriesAll(){
         List<Category> response = service.searchCategoryAll();
         return Json.createJson(response);
+    }
+
+    @GetMapping("/category/all")
+    public Json<?> getCategoriesAllRows(){
+        List<Category> response = service.searchCategoryAll();
+        return Json.createJson(response);
+    }
+
+    /**
+     * validate 처리한 결과 값 에러 Json 생성
+     * @param bindingResult
+     * @return
+     */
+    private Json<?> setErrorMessage(BindingResult bindingResult){
+        ObjectError error = bindingResult.getGlobalError();
+        String errorMsg = Arrays.toString(error.getArguments()) + error.getDefaultMessage();
+        int errorCode = Integer.valueOf(error.getCode());
+        return Json.createErrorJson(errorCode,errorMsg );
     }
 }

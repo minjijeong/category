@@ -1,6 +1,6 @@
 package com.api.category.service;
 
-import com.api.category.model.dto.CategoryForm;
+import com.api.category.model.form.CategoryForm;
 import com.api.category.model.entity.Category;
 import com.api.category.repository.CategoryRepository;
 import java.util.ArrayList;
@@ -107,6 +107,11 @@ public class CategoryService {
      */
     public List<Category> searchCategoryAll() {
         List<Category> categoryList = categoryRepository.findAllByDispYnIsTrue();
+        return categoryList;
+    }
+
+    public List<Category> searchCategoryAllRows() {
+        List<Category> categoryList = categoryRepository.findAll();
         return categoryList;
     }
 }

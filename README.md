@@ -1,11 +1,11 @@
 ## 개발환경 구성
-- Gradle 
+- Gradle 7.4.1
 - Springboot 2.7.0 
 - Java11 
 - Spring Data JPA
 - H2 Database
 - Spring Web
-[X] Spring REST Docs 
+- Spring REST Docs 3.3.2
 
 ## 요구사항 정리 
 - 카테고리 등록/수정/삭제 API 
@@ -15,19 +15,25 @@
   * 상위 카테고리를 지정하지 않을 시, 전체 카테고리를 반환해야 합니다.
 
 ### 카테고리 구성 
-대/중/소분류 카테고리 코드, 현재 카테고리 ID, 카테고리 레벨, 카테고리명
+- 대/중/소분류 카테고리 코드
+- 현재 카테고리 ID
+- 카테고리 레벨
+- 카테고리명
+- 전시여부
 
 ### 구현 내역정리 
-** 추가 제약 사항
+**[추가 제약 사항]**
 - 상위 카테고리는 수정이 될수 없고 삭제만 가능
-- 하위 카테고리가 존재할시 삭제 불가 
-- 카테고리 레벨은 수정 불가능
 
+- 하위 카테고리가 존재할시 삭제 불가 
+   
+- 카테고리 레벨은 수정 불가능
+  
 - 카테고리 등록/수정
-  * [O] 수정/삭제 form으로 입력받아서, validation 처리
+  * 수정/삭제 form으로 입력받아서, validation 처리
     * 카테고리명, 레벨 필수값 입력
     * 레벨에 따른 대,중 분류별 카테고리 ID 기입 체크
-  * [O] 수정/삭제 디비 데이터 조회하여 validation 처리
+  * 수정/삭제 디비 데이터 조회하여 validation 처리
     * 동일 카테고리명 존재여부 조회
     * 레벨 기준 상위 카테고리 null 체크
     * 수정 시, ID 유효성 체크 
@@ -47,9 +53,6 @@
   * 카테고리 ID, level 기준으로 조회
   
 - 카테고리 전체 조회 (전시가능한 카테고리만)
-
-- 카테고리 레벨단위 조회 
-  * 카테고리 level 기준으로 조회
   
 
 ## 데이타 리턴 타입 정의 
@@ -66,6 +69,12 @@ result를 data 항목으로 return 한다.
 }
 ```
 ### 에러
+#### 에러 유형
+- HTTP 기본유형 (404, 500 등 미포함)
+- Custom 에러 
+  * 998 : validate 해야할 객체 null 인 경우
+  * 999 : validate 에러
+  
 ```json
 {
     "status": 304,
@@ -76,15 +85,10 @@ result를 data 항목으로 return 한다.
 }
 ```
 
+## 테스트 및 문서 정의 
+### 방법1. JUnit Test 실행 후 REST Docs 결과값 확인
+- JUnit repository, service, API UnitTest 생성
+  * REST Docs 저장 경로 : categoryapi/custom
 
-## 테스트 정의 
-- Unit test 및 Integration test 작성
-> JUnit repository, controller, service UnitTest 생성
-
-- http 요청에 의해 API 호출 테스트 
-> TEST.http 파일 참고
-
-## 추가 작업 사항
-[O] [JPQL 특징을 살려 메서드 이름 변경하여 쿼리 어노테이션 없이 수행](https://www.devkuma.com/docs/jpa/%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1-%EC%BF%BC%EB%A6%AC-%EB%A9%94%EC%86%8C%EB%93%9C%EC%9D%98-%EB%AA%85%EB%AA%85-%EA%B7%9C%EC%B9%99/)
-[ ] [@DynamicInsert, @DynamicUpdate or default 값으로 빈값 처리 안되도록 수정](https://dotoridev.tistory.com/6)
-[ ] REST Docs 적용 or Swagger 적용 or 삭제
+### 방법2. TEST.http 이용하여 API 호출 테스트
+- categoryapi/TEST.http 파일 참고

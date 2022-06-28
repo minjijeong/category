@@ -1,0 +1,14 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/api/category/register' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -d '{
+  "id" : 0,
+  "level" : 2,
+  "cateName" : "중분류_카테_컨트롤러테스트",
+  "largeCateId" : 1,
+  "mediumCateId" : 0,
+  "smallCateId" : 0,
+  "dispYn" : true
+}'
+----

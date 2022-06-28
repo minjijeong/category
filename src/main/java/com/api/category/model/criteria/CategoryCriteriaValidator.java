@@ -1,7 +1,5 @@
 package com.api.category.model.criteria;
 
-import com.api.category.model.dto.CategoryForm;
-import com.api.category.model.dto.CategoryFormValidator;
 import com.api.category.repository.CategoryRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -29,10 +27,10 @@ public class CategoryCriteriaValidator implements Validator {
             return;
         }
         CategoryCriteria criteria = (CategoryCriteria) target;
-        if(criteria.getId() == null){
+        if(criteria.getId() == 0){
             errors.reject("999", new String[] {"카테고리 ID"}, "empty cateId");
         }else{
-            if(categoryRepository.findByIdAndDispYnIsTrue(criteria.getId()) == null){
+            if(categoryRepository.findById(criteria.getId()) == null){
                 errors.reject("999", new String[] {"카테고리 ID"}, "invalid cateId");
             }
         }

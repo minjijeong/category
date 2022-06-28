@@ -1,0 +1,17 @@
+[source,http,options="nowrap"]
+----
+POST /api/category/register HTTP/1.1
+Content-Type: application/json
+Content-Length: 169
+Host: localhost:8080
+
+{
+  "id" : 0,
+  "level" : 2,
+  "cateName" : "중분류_카테_컨트롤러테스트",
+  "largeCateId" : 1,
+  "mediumCateId" : 0,
+  "smallCateId" : 0,
+  "dispYn" : true
+}
+----

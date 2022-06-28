@@ -1,4 +1,4 @@
-package com.api.category.model.dto;
+package com.api.category.model.form;
 
 import lombok.Builder;
 import lombok.Getter;

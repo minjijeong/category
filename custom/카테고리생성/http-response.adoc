@@ -1,0 +1,22 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 281
+
+{
+  "status" : 200,
+  "errorCode" : null,
+  "message" : "OK",
+  "result" : {
+    "id" : 4,
+    "level" : 2,
+    "cateName" : "중분류_카테_컨트롤러테스트",
+    "largeCateId" : 1,
+    "mediumCateId" : 0,
+    "smallCateId" : 0,
+    "dispYn" : true
+  },
+  "error" : false
+}
+----

@@ -1,6 +1,6 @@
 package com.api.category.service;
 
-import com.api.category.model.dto.CategoryForm;
+import com.api.category.model.form.CategoryForm;
 import com.api.category.model.entity.Category;
 import java.util.ArrayList;
 import java.util.List;
