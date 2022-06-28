@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CategoryForm {
+    // 카테고리 ID
     private Long id;
 
     // 카테고리 레벨
@@ -37,17 +38,5 @@ public class CategoryForm {
         this.mediumCateId = mediumCateId;
         this.smallCateId = smallCateId;
         this.dispYn = dispYn;
-    }
-
-    @Override
-    public String toString() {
-        return "Category{" +
-                "cateId='" + id + '\'' +
-                ", level=" + level +
-                ", cateName='" + cateName + '\'' +
-                ", largeCateId='" + largeCateId + '\'' +
-                ", mediumCateId='" + mediumCateId + '\'' +
-                ", smallCateId='" + smallCateId + '\'' +
-                '}';
     }
 }

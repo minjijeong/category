@@ -79,7 +79,7 @@ public class CategoryServiceTests {
     @Transactional
     @Test
     void 카테고리수정() {
-        Category category = Category.builder()
+        CategoryForm category = CategoryForm.builder()
                 .cateName("카테고리 바꼈어여~~~ ")
                 .id(10L)
                 .level(3)
@@ -110,14 +110,14 @@ public class CategoryServiceTests {
     void 카테고리조회_대분류기준(){
         long lCateId = 1;
         List<Category> TCategoryList = service.searchCategoryListById(lCateId);
-        Assertions.assertThat(TCategoryList.size()).isEqualTo(6);
+        Assertions.assertThat(TCategoryList.size()).isEqualTo(3);
     }
 
     @Test
     void 카테고리조회_중분류기준(){
         long mCateId = 2;
         List<Category> TCategoryList = service.searchCategoryListById(mCateId);
-        Assertions.assertThat(TCategoryList.size()).isEqualTo(4);
+        Assertions.assertThat(TCategoryList.size()).isEqualTo(2);
     }
 
     @AfterEach

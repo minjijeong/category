@@ -44,38 +44,6 @@ public class Json<T> implements CommonJson<T> {
     public Json() {
     }
 
-//    public Integer getStatus() {
-//        return this.status;
-//    }
-//
-//    public String getErrorCode() {
-//        return this.errorCode;
-//    }
-//
-//    public String getMessage() {
-//        return this.message;
-//    }
-//
-//    public T getResult() {
-//        return this.result;
-//    }
-//
-//    public void setStatus(Integer status) {
-//        this.status = status;
-//    }
-//
-//    public void setErrorCode(String errorCode) {
-//        this.errorCode = errorCode;
-//    }
-//
-//    public void setMessage(String message) {
-//        this.message = message;
-//    }
-//
-//    public void setResult(T result) {
-//        this.result = result;
-//    }
-
     public String toString() {
         return "Json(status=" + this.getStatus() + ", errorCode=" + this.getErrorCode() + ", message=" + this.getMessage() + ", result=" + this.getResult() + ")";
     }

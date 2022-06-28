@@ -1,20 +1,11 @@
-
 ## 개발환경 구성
 - Gradle 
 - Springboot 2.7.0 
 - Java11 
-- Spring REST Docs
 - Spring Data JPA
 - H2 Database
 - Spring Web
- 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.7.0/gradle-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.7.0/gradle-plugin/reference/html/#build-image)
-* [Spring REST Docs](https://docs.spring.io/spring-restdocs/docs/current/reference/html5/)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/2.7.0/reference/htmlsingle/#data.sql.jpa-and-spring-data)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.7.0/reference/htmlsingle/#web)
-
+[X] Spring REST Docs 
 
 ## 요구사항 정리 
 - 카테고리 등록/수정/삭제 API 
@@ -32,15 +23,18 @@
 - 하위 카테고리가 존재할시 삭제 불가 
 - 카테고리 레벨은 수정 불가능
 
-- 카테고리 등록
-  * 동일 카테고리명 존재여부 조회
-  * 레벨 기준 상위 카테고리 null 체크
-
-- 카테고리 수정 
-  * 카테고리명, 노출여부 수정 가능
+- 카테고리 등록/수정
+  * [O] 수정/삭제 form으로 입력받아서, validation 처리
+    * 카테고리명, 레벨 필수값 입력
+    * 레벨에 따른 대,중 분류별 카테고리 ID 기입 체크
+  * [O] 수정/삭제 디비 데이터 조회하여 validation 처리
+    * 동일 카테고리명 존재여부 조회
+    * 레벨 기준 상위 카테고리 null 체크
+    * 수정 시, ID 유효성 체크 
 
 - 카테고리 삭제 
   * 하위 카테고리가 미 존재할 시 삭제
+  * 하위 카테고리가 존재할 시 dispYn = false 업데이트
   * 카테고리 ID 기준으로 삭제
 
 - 카테고리 단일 조회 
@@ -52,26 +46,45 @@
 - 카테고리 중분류 기준 하위 카테고리 조회
   * 카테고리 ID, level 기준으로 조회
   
-- 카테고리 전체 조회
+- 카테고리 전체 조회 (전시가능한 카테고리만)
 
 - 카테고리 레벨단위 조회 
   * 카테고리 level 기준으로 조회
   
-- 전시가능 카테고리 전체 조회
-  * 전시가능여부 기준으로 조회
+
+## 데이타 리턴 타입 정의 
+result를 data 항목으로 return 한다.
+
+### 정상
+```json
+{
+    "status": 200,
+    "errorCode": null,
+    "message": "OK",
+    "result": [], 
+    "error": false
+}
+```
+### 에러
+```json
+{
+    "status": 304,
+    "errorCode": null,
+    "message": "Not Modified",
+    "result": null,
+    "error": true
+}
+```
+
 
 ## 테스트 정의 
 - Unit test 및 Integration test 작성
 > JUnit repository, controller, service UnitTest 생성
 
+- http 요청에 의해 API 호출 테스트 
+> TEST.http 파일 참고
 
-### 테스트 
-#### 1. 연결 테스트 
-> http://localhost:8080/hello
-```json
-{
-"success": true,
-"code": 0,
-"msg": "성공하였습니다."
-}
-```
+## 추가 작업 사항
+[O] [JPQL 특징을 살려 메서드 이름 변경하여 쿼리 어노테이션 없이 수행](https://www.devkuma.com/docs/jpa/%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1-%EC%BF%BC%EB%A6%AC-%EB%A9%94%EC%86%8C%EB%93%9C%EC%9D%98-%EB%AA%85%EB%AA%85-%EA%B7%9C%EC%B9%99/)
+[ ] [@DynamicInsert, @DynamicUpdate or default 값으로 빈값 처리 안되도록 수정](https://dotoridev.tistory.com/6)
+[ ] REST Docs 적용 or Swagger 적용 or 삭제

@@ -1,7 +1,6 @@
 package com.api.category.repository;
 
 import com.api.category.model.entity.Category;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -85,46 +84,53 @@ public class CategoryRepositoryTests {
     @Test
     void 카테고리수정() {
         long cateId = 2L;
-        Category category = repository.findByCateId(cateId);
+        Category category = repository.findByIdAndDispYnIsTrue(cateId);
         category.setCateName("뉴_카테아이디");
         repository.save(category);
         clear();
 
-        Category result = repository.findByCateId(cateId);
+        Category result = repository.findByIdAndDispYnIsTrue(cateId);
         Assertions.assertThat(result.getCateName()).isEqualTo(category.getCateName());
     }
 
     @Test
     void 카테고리삭제(){
         long cateId = 9;
-        Category result = repository.findByCateId(cateId);
+        Category result = repository.findByIdAndDispYnIsTrue(cateId);
         repository.deleteById(result.getId());
         clear();
 
-        result = repository.findByCateId(cateId);
+        result = repository.findByIdAndDispYnIsTrue(cateId);
         Assertions.assertThat(result).isNull();
     }
 
     @Test
     void 카테고리조회_단일조회(){
         long cateId = 3;
-        Category category = repository.findByCateId(cateId);
+        Category category = repository.findByIdAndDispYnIsTrue(cateId);
         Assertions.assertThat(category.getId()).isEqualTo(cateId);
     }
 
     @Test
     void 카테고리조회_대분류기준(){
         long lCateId = 1L;
-        List<Category> CategoryList = repository.findAllByLCate(lCateId);
+        List<Category> CategoryList = repository.findAllByLargeCateIdAndDispYnIsTrue(lCateId);
         Assertions.assertThat(CategoryList.size()).isEqualTo(6);
     }
 
     @Test
     void 카테고리조회_중분류기준(){
         long mCateId = 2L;
-        List<Category> CategoryList = repository.findAllByMCate(mCateId);
+        List<Category> CategoryList = repository.findAllByMediumCateIdAndDispYnIsTrue(mCateId);
         Assertions.assertThat(CategoryList.size()).isEqualTo(4);
     }
+
+    @Test
+    void 카테고리조회_전체조회(){
+        List<Category> category = repository.findAllByDispYnIsTrue();
+        Assertions.assertThat(category).isNotNull();
+    }
+
 
     void clear() {
 //        em.flush();
