@@ -19,7 +19,7 @@ categoryapi/backup-jar/category-0.0.1-SNAPSHOT_java8.jar
 ### 개발환경 구성
 - Gradle 7.4.1
 - Springboot 2.7.0 
-- Java8 
+- Java11 (build.gradle 파일에서 sourceCompatibility 로 수정가능. java8, java11 두버젼 테스트 완료) 
 - Spring Data JPA
 - H2 Database
 - Spring Web
